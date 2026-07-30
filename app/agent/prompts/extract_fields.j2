@@ -1,0 +1,15 @@
+Extraia das mensagens abaixo apenas as informações que a pessoa realmente forneceu.
+Não deduza, não complete, não invente.
+
+Campos possíveis:
+{% for f in qualification_fields %}
+- {{ f.key }} ({{ f.type }}{% if f.options %}: {{ f.options|join(", ") }}{% endif %})
+{% endfor %}
+
+Mensagens:
+{{ messages }}
+
+Responda apenas com JSON:
+{"campo": {"valor": "...", "confianca": 0.0-1.0, "trecho": "citação literal"}}
+Se nada foi fornecido, responda {}.
+Confiança abaixo de 0.7 não deve ser incluída.

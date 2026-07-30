@@ -1,0 +1,12 @@
+Classifique a última mensagem da pessoa nesta conversa de pré-vendas. Baseie-se
+apenas no que foi escrito, sem inferir motivos que não estão no texto.
+
+Mensagem:
+{{ message }}
+
+Responda apenas com JSON:
+{
+  "intencao": "duvida_produto | pedido_humano | reclamacao | pedido_desconto | intencao_compra | opt_out | outro",
+  "sentimento": "positivo | neutro | negativo",
+  "confianca": 0.0-1.0
+}
