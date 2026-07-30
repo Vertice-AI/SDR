@@ -30,6 +30,10 @@ class Settings(BaseSettings):
 
     # Banco e fila
     database_url: str
+    # Só para Alembic: role com privilégio para ALTER TABLE / CREATE POLICY /
+    # GRANT. A aplicação em runtime nunca usa esta URL (`docs/03` §6).
+    # Vazio = usa `database_url` (ambientes sem role separada ainda).
+    database_admin_url: str = ""
     redis_url: str = "redis://localhost:6379/0"
 
     # LLM

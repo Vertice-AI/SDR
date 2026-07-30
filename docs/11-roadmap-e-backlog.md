@@ -20,14 +20,14 @@ Estimativa total até um cliente em produção: 5 a 7 semanas de trabalho focado
 
 ## Fase 1 — Dados e multi-tenancy (3–4 dias)
 
-- [ ] **1.1** Models SQLAlchemy de todas as tabelas de `docs/03` + migração inicial Alembic.
+- [x] **1.1** Models SQLAlchemy de todas as tabelas de `docs/03` + migração inicial Alembic.
   *Aceite:* `make upgrade` cria o schema completo, com índices.
-- [ ] **1.2** RLS habilitada com política por tenant; usuário da aplicação sem `BYPASSRLS`.
-- [ ] **1.3** `TenantContext` (contextvar) + dependência FastAPI + `SET LOCAL app.tenant_id` por transação.
-- [ ] **1.4** Repositórios base com filtro de tenant obrigatório.
+- [x] **1.2** RLS habilitada com política por tenant; usuário da aplicação sem `BYPASSRLS`.
+- [x] **1.3** `TenantContext` (contextvar) + dependência FastAPI + `SET LOCAL app.tenant_id` por transação.
+- [x] **1.4** Repositórios base com filtro de tenant obrigatório.
   *Aceite:* `tests/integration/test_tenant_isolation.py` passa — contexto do tenant A não lê nada do tenant B, nem passando o id explicitamente.
-- [ ] **1.5** Criptografia de campos (`_encrypted`) com AES-GCM e `APP_ENCRYPTION_KEY`.
-- [ ] **1.6** Seed de tenant de demonstração (`make seed`).
+- [x] **1.5** Criptografia de campos (`_encrypted`) com AES-GCM e `APP_ENCRYPTION_KEY`.
+- [x] **1.6** Seed de tenant de demonstração (`make seed`).
 
 ## Fase 2 — Canal WhatsApp ponta a ponta (4–5 dias)
 

@@ -8,22 +8,22 @@ from sqlalchemy.ext.asyncio import async_engine_from_config
 
 from app.config import get_settings
 
-# Modelos entram na Fase 1 (`docs/03-modelo-de-dados.md`). Até lá,
-# `target_metadata` fica None e as migrações são escritas à mão.
-try:
-    from app.models.base import Base  # type: ignore[import-not-found]
+# Importar `app.models` (não só `app.models.base`) registra toda tabela em
+# `Base.metadata` antes do autogenerate rodar — ver `app/models/__init__.py`.
+from app.models import Base
 
-    target_metadata = Base.metadata
-except ImportError:
-    target_metadata = None
+target_metadata = Base.metadata
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
 
 # String de conexão vem de app.config (pydantic-settings / .env), nunca do
-# alembic.ini — uma fonte só de verdade para credenciais de banco.
-config.set_main_option("sqlalchemy.url", get_settings().database_url)
+# alembic.ini — uma fonte só de verdade para credenciais de banco. Migração
+# roda com a role administrativa (`database_admin_url`), nunca com a role de
+# runtime da aplicação, que não tem privilégio para DDL/GRANT (`docs/03` §6).
+_settings = get_settings()
+config.set_main_option("sqlalchemy.url", _settings.database_admin_url or _settings.database_url)
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.

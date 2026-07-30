@@ -10,6 +10,12 @@ import os
 os.environ.setdefault("APP_SECRET_KEY", "test-secret-key")
 os.environ.setdefault("APP_ENCRYPTION_KEY", "dGVzdC1lbmNyeXB0aW9uLWtleS0zMi1ieXRlcyEh")
 os.environ.setdefault("PHONE_HASH_PEPPER", "test-pepper")
-os.environ.setdefault("DATABASE_URL", "postgresql+asyncpg://sdr:sdr@localhost:5432/sdr_test")
+# Role de runtime (sem BYPASSRLS) — testes de integração exercitam a mesma
+# política de RLS que roda em produção (`docs/03` §6), não uma role superuser
+# que a ignoraria silenciosamente.
+os.environ.setdefault(
+    "DATABASE_URL", "postgresql+asyncpg://sdr_app:sdr_app@localhost:5432/sdr_test"
+)
+os.environ.setdefault("DATABASE_ADMIN_URL", "postgresql+asyncpg://sdr:sdr@localhost:5432/sdr_test")
 os.environ.setdefault("REDIS_URL", "redis://localhost:6379/1")
 os.environ.setdefault("ANTHROPIC_API_KEY", "test-anthropic-key")
