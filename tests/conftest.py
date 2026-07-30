@@ -8,7 +8,10 @@ segredo — sem depender de um `.env` versionado com dados sensíveis.
 import os
 
 os.environ.setdefault("APP_SECRET_KEY", "test-secret-key")
-os.environ.setdefault("APP_ENCRYPTION_KEY", "dGVzdC1lbmNyeXB0aW9uLWtleS0zMi1ieXRlcyEh")
+# 32 bytes reais após base64-decode — `EncryptionError` se não for exatamente
+# isso (`app/core/crypto.py`). A string anterior parecia certa mas decodifica
+# para 30 bytes; só apareceu quando um teste passou a gravar coluna `_encrypted`.
+os.environ.setdefault("APP_ENCRYPTION_KEY", "eUY8DUiJYhMv6C6UQehb1mPeHVLzzlmYOZan+UhsqMc=")
 os.environ.setdefault("PHONE_HASH_PEPPER", "test-pepper")
 # Role de runtime (sem BYPASSRLS) — testes de integração exercitam a mesma
 # política de RLS que roda em produção (`docs/03` §6), não uma role superuser

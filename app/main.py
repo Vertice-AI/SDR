@@ -12,9 +12,12 @@ from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 
 from app.api.health import router as health_router
+from app.api.webhooks.evolution import router as evolution_webhook_router
+from app.api.webhooks.meta import router as meta_webhook_router
 from app.config import get_settings
 from app.core.errors import DomainError
 from app.core.logging import configure_logging
+from app.core.queue import close_arq_pool
 
 logger = structlog.get_logger()
 
@@ -25,6 +28,7 @@ async def lifespan(_app: FastAPI) -> AsyncIterator[None]:
     configure_logging(log_level=settings.log_level, phone_hash_pepper=settings.phone_hash_pepper)
     logger.info("app_startup", app_env=settings.app_env)
     yield
+    await close_arq_pool()
     logger.info("app_shutdown")
 
 
@@ -32,6 +36,8 @@ def create_app() -> FastAPI:
     app = FastAPI(title="sdr-agent", lifespan=lifespan)
 
     app.include_router(health_router)
+    app.include_router(evolution_webhook_router)
+    app.include_router(meta_webhook_router)
 
     @app.exception_handler(DomainError)
     async def domain_error_handler(_request: Request, exc: DomainError) -> JSONResponse:

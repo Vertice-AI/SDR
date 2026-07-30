@@ -68,7 +68,30 @@ class EncryptionError(DomainError):
 
 
 class ExternalServiceError(DomainError):
-    """Falha de integração externa (WhatsApp, Google, LLM, CRM) após retries."""
+    """Falha de integração externa (WhatsApp, Google, LLM, CRM).
+
+    `retryable` distingue 5xx/429/timeout (vale tentar de novo) de 4xx
+    definitivo (`docs/06` §4 item 7) — quem chama decide se tenta de novo,
+    esta exceção só carrega o veredito de quem a levantou.
+    """
 
     code = "external_service_error"
     status_code = 502
+
+    def __init__(
+        self,
+        message: str,
+        *,
+        retryable: bool = True,
+        details: dict[str, Any] | None = None,
+    ) -> None:
+        super().__init__(message, details=details)
+        self.retryable = retryable
+
+
+class ChannelCapabilityUnavailableError(DomainError):
+    """Ação pedida a um `ChannelAdapter` que o provedor não suporta
+    (ex.: template no Evolution — `docs/06` §3)."""
+
+    code = "channel_capability_unavailable"
+    status_code = 422

@@ -31,18 +31,19 @@ Estimativa total até um cliente em produção: 5 a 7 semanas de trabalho focado
 
 ## Fase 2 — Canal WhatsApp ponta a ponta (4–5 dias)
 
-- [ ] **2.1** `ChannelAdapter` (Protocol) e `InboundMessage` canônico.
-- [ ] **2.2** `EvolutionAdapter`: parse de `messages.upsert`, envio de texto, typing, `connection.update`.
-- [ ] **2.3** `MetaCloudAdapter`: verificação de webhook, validação HMAC do corpo cru, parse de mensagens e status, envio de texto, typing, templates, download de mídia.
+- [x] **2.1** `ChannelAdapter` (Protocol) e `InboundMessage` canônico.
+- [x] **2.2** `EvolutionAdapter`: parse de `messages.upsert`, envio de texto, typing, `connection.update`.
+- [x] **2.3** `MetaCloudAdapter`: verificação de webhook, validação HMAC do corpo cru, parse de mensagens e status, envio de texto, typing, templates, download de mídia.
   *Aceite:* testes com payloads reais de exemplo para os dois provedores.
-- [ ] **2.4** Endpoints de webhook com persistência do evento cru, dedupe e enfileiramento. Resposta 200 sem processamento síncrono.
+- [x] **2.4** Endpoints de webhook com persistência do evento cru, dedupe e enfileiramento. Resposta 200 sem processamento síncrono.
   *Aceite:* p95 < 300 ms em teste local; evento duplicado não gera segunda mensagem.
-- [ ] **2.5** Worker `inbound_message`: resolve contato/conversa, persiste mensagem, aplica buffer com debounce.
+- [x] **2.5** Worker `inbound_message`: resolve contato/conversa, persiste mensagem, aplica buffer com debounce.
   *Aceite:* 5 mensagens em 3 s disparam **um** `process_turn`.
-- [ ] **2.6** `sender.py`: opt-out, janela 24 h, rate limit, split, typing, delay, persistência e retry.
-- [ ] **2.7** Lock distribuído por conversa.
+- [x] **2.6** `sender.py`: opt-out, janela 24 h, rate limit, split, typing, delay, persistência e retry.
+- [x] **2.7** Lock distribuído por conversa.
   *Aceite:* dois turnos simultâneos → um processa, o outro reagenda.
 - [ ] **2.8** Eco de teste: agente responde repetindo a mensagem, sem LLM.
+  *Bloqueado:* precisa de um número WhatsApp pareado no Evolution API (um número avulso serve — não precisa ser o definitivo). Retomar assim que houver um disponível.
   *Aceite:* mensagem real no WhatsApp de teste vai e volta.
 
 ## Fase 3 — Motor do agente (5–7 dias)
