@@ -11,6 +11,8 @@ from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader, StrictUndefined
 
+from app.agent.state import ESTADOS_SEM_RESPOSTA
+
 _TEMPLATES_DIR = Path(__file__).parent
 
 _ENV = Environment(
@@ -23,11 +25,11 @@ _ENV = Environment(
     # essa marcação — engole a quebra de linha entre iterações do loop.
 )
 
-# Estados em que o agente é silenciado (`docs/04` §3, `docs/05` §2) — não
-# deveríamos nunca chegar a renderizar um prompt de sistema aqui; se
-# chegarmos, é bug em quem decide o estado (tarefa 3.3), não algo a
+# Estados em que o agente é silenciado (`app/agent/state.py`, `docs/04` §3,
+# `docs/05` §2) — não deveríamos nunca chegar a renderizar um prompt de
+# sistema aqui; se chegarmos, é bug em quem decide o estado, não algo a
 # degradar silenciosamente.
-_ESTADOS_SEM_RESPOSTA = frozenset({"handoff_humano", "opt_out"})
+_ESTADOS_SEM_RESPOSTA = ESTADOS_SEM_RESPOSTA
 
 
 @dataclass(frozen=True, slots=True)

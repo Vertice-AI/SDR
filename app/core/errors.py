@@ -89,6 +89,19 @@ class ExternalServiceError(DomainError):
         self.retryable = retryable
 
 
+class ToolNotAllowedError(DomainError):
+    """O LLM chamou uma ferramenta fora das permitidas para o estado atual
+    da conversa (`app/agent/state.py`, `docs/04-motor-de-conversa.md` §3).
+
+    O estado controla o que é permitido — nunca o próprio LLM. Se isto
+    disparar em produção, é sinal de prompt injection ou de bug no mapeamento
+    estado → ferramentas, não algo a silenciar.
+    """
+
+    code = "tool_not_allowed"
+    status_code = 409
+
+
 class ChannelCapabilityUnavailableError(DomainError):
     """Ação pedida a um `ChannelAdapter` que o provedor não suporta
     (ex.: template no Evolution — `docs/06` §3)."""
