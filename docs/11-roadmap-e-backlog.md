@@ -52,8 +52,8 @@ Estimativa total até um cliente em produção: 5 a 7 semanas de trabalho focado
 - [x] **3.2** Templates Jinja2 dos prompts (`docs/05`) e renderização com contexto do tenant.
 - [x] **3.3** Máquina de estados e mapeamento estado → ferramentas permitidas.
 - [x] **3.4** Loop `run_turn` com `MAX_ITERATIONS`, timeouts, tratamento de falha e registro em `agent_runs`.
-- [ ] **3.5** Ferramentas: `registrar_dados_lead`, `registrar_qualificacao`, `escalar_para_humano`, `desqualificar`, `encerrar_conversa`.
-- [ ] **3.6** Cálculo de score e classificação a partir de `qualification_fields`.
+- [x] **3.5** Ferramentas: `registrar_dados_lead`, `registrar_qualificacao`, `escalar_para_humano`, `desqualificar`, `encerrar_conversa`.
+- [x] **3.6** Cálculo de score e classificação a partir de `qualification_fields`.
 - [ ] **3.7** Resumo rolante com Haiku a cada 15 mensagens.
 - [ ] **3.8** Guardrails de entrada e saída (`docs/09` §1 e §2).
 - [ ] **3.9** Infraestrutura de cenários de conversa em YAML, com modo `replay` e `live`.
