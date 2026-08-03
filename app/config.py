@@ -42,6 +42,7 @@ class Settings(BaseSettings):
     llm_model_fast: str = "claude-haiku-4-5-20251001"
     llm_max_iterations: int = 6
     llm_timeout_seconds: int = 20
+    tool_timeout_seconds: int = 10
 
     # Embeddings
     embedding_provider: Literal["voyage", "openai"] = "voyage"
